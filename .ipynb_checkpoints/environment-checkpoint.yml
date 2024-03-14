@@ -1,0 +1,19 @@
+name: relapse
+
+channels:
+  - defaults
+  - conda-forge
+
+dependencies:
+  - python=3.10.12
+  - numpy
+  - scipy
+  - pandas
+  - h5py
+  - scikit-learn
+  - matplotlib
+  - tqdm
+  - tensorflow
+  - plotly
+  - seaborn
+  - tensorflow
