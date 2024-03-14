@@ -1,4 +1,3 @@
-# from umap import UMAP  # Import UMAP from umap module
 from scipy.interpolate import interp1d
 import pandas as pd
 import os
@@ -26,7 +25,6 @@ from sklearn.model_selection import train_test_split
 import plotly.graph_objects as go
 from scipy.interpolate import griddata
 import datetime
-
 
 
 def plot_withdrawal_features(node_velocities, node_features, vmin=-1, vmax=1):
@@ -74,6 +72,83 @@ def plot_paw_trajectory(locations, smoothed_locations, toe_index, center_index, 
     plt.legend(loc="center right")
     plt.title('Paw X-axis raw trajectory')
 
+
+def plot_2D_PCA_embedding(pca_result):
+    """
+    Plot 2D PCA embeddings for different combinations of principal components.
+
+    Parameters:
+        pca_result (numpy.ndarray): PCA results.
+
+    Returns:
+        None
+    """
+    # Create a figure and three subplots
+    fig, axs = plt.subplots(1, 3, figsize=(15, 5))
+
+    # Plot PC1 vs PC2
+    axs[0].scatter(pca_result[:, 0], pca_result[:, 1], s=0.5)
+    axs[0].set_xlabel('PC1')
+    axs[0].set_ylabel('PC2')
+    axs[0].set_title('PC1 vs PC2')
+
+    # Plot PC2 vs PC3
+    axs[1].scatter(pca_result[:, 1], pca_result[:, 2], s=0.5)
+    axs[1].set_xlabel('PC2')
+    axs[1].set_ylabel('PC3')
+    axs[1].set_title('PC2 vs PC3')
+
+    # Plot PC1 vs PC3
+    axs[2].scatter(pca_result[:, 0], pca_result[:, 2], s=0.5)
+    axs[2].set_xlabel('PC1')
+    axs[2].set_ylabel('PC3')
+    axs[2].set_title('PC1 vs PC3')
+
+    # Adjust layout
+    plt.tight_layout()
+
+    # Show the plot
+    plt.show()
+
+
+def plot_3D_PCA_embedding(pca_result):
+    """
+    Plot 3D PCA embeddings.
+
+    Parameters:
+        pca_result (numpy.ndarray): PCA results.
+
+    Returns:
+        None
+    """
+    # Create a trace for 3D scatter plot
+    trace = go.Scatter3d(
+        x=pca_result[:, 0],
+        y=pca_result[:, 1],
+        z=pca_result[:, 2],
+        mode='markers',
+        marker=dict(
+            size=3,
+            color='blue',
+            opacity=0.5
+        )
+    )
+
+    # Create layout for the plot
+    layout = go.Layout(
+        title='PCA Visualization of Encoded Data (3D)',
+        scene=dict(
+            xaxis=dict(title='PC1'),
+            yaxis=dict(title='PC2'),
+            zaxis=dict(title='PC3')
+        )
+    )
+
+    # Create figure and add trace to it
+    fig = go.Figure(data=[trace], layout=layout)
+
+    # Show the plot
+    fig.show()
 
 def plot_displacement_vectors(embedding_data, static_threshold = 40, grid_rows = 15, grid_cols = 15):
     # Example x-y data (replace this with your own data)

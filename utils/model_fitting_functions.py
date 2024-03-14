@@ -25,9 +25,11 @@ from tensorflow.keras.layers import Input, Dense
 from tensorflow.keras.models import Model
 from sklearn.model_selection import train_test_split
 import plotly.graph_objects as go
+from scipy.interpolate import griddata
+import datetime
 
 
-def pca_transform_with_progress(features, n_components):
+def pca_transform(data, n_components):
     """
     Perform PCA transformation on a 2-dimensional array of data (features) with a progress bar.
 
@@ -38,16 +40,10 @@ def pca_transform_with_progress(features, n_components):
     Returns:
         array-like: Transformed features.
     """
-    # Check if there are enough samples and features
-    n_samples, n_features = features.shape
-    if n_features < n_components:
-        raise ValueError("Number of components is larger than number of features")
-
     pca = PCA(n_components=n_components)
-    pca.fit(features)
-    transformed_features = pca.transform(features)
+    pca_result = pca.fit_transform(data)
 
-    return transformed_features
+    return pca_result
 
 
 
